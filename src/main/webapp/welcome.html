@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>用友网银平台</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+<link rel="stylesheet" type="text/css" href="css/themes/default.css"
+	id="skin-switcher">
+<link rel="stylesheet" type="text/css" href="css/responsive.css">
+<!-- STYLESHEETS -->
+<!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- ANIMATE -->
+<link rel="stylesheet" type="text/css"
+	href="css/animatecss/animate.min.css" />
+<!-- DATE RANGE PICKER -->
+<link rel="stylesheet" type="text/css"
+	href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+<!-- TODO -->
+<link rel="stylesheet" type="text/css"
+	href="js/jquery-todo/css/styles.css" />
+<!-- FULL CALENDAR -->
+<link rel="stylesheet" type="text/css"
+	href="js/fullcalendar/fullcalendar.min.css" />
+<!-- GRITTER -->
+<link rel="stylesheet" type="text/css"
+	href="js/gritter/css/jquery.gritter.css" />
+<!-- FONTS -->
+<link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700'
+	rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<!-- HEADER -->
+	<header class="navbar clearfix" id="header">
+		<div class="container">
+			<div class="navbar-brand">
+				<!-- LOGO -->
+				<a href="welcome.html"> <img src="img/logo/logo.png"
+					alt="Cloud Admin Logo" class="img-responsive" height="30"
+					width="120">
+				</a>
+				<div class="visible-xs">
+					<a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+						<i class="fa fa-users"></i>
+					</a>
+				</div>
+				<div id="sidebar-collapse" class="sidebar-collapse btn">
+					<i class="fa fa-bars" data-icon1="fa fa-bars"
+						data-icon2="fa fa-bars"></i>
+				</div>
+			</div>
+			<!-- 登录用户显示 -->
+			<ul class="nav navbar-nav pull-right">
+				<li class="dropdown" id="header-tasks"><a 
+					class="dropdown-toggle" data-toggle="dropdown"><span
+						class="username" id="time"></span></a></li>
+				<li class="dropdown user" id="header-user"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"> <img alt=""
+						src="img/avatars/user.png" /> <span class="username">用户名</span> <i
+						class="fa fa-angle-down"></i>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="#"><i class="fa fa-user"></i>我的资料</a></li>
+						<li><a href="#"><i class="fa fa-cog"></i> 账户设置</a></li>
+						<li><a href="login.html"><i class="fa fa-power-off"></i>
+								注销</a></li>
+					</ul></li>
+			</ul>
+			<!-- 登录用户显示 -->
+		</div>
+	</header>
+	<!-- PAGE -->
+	<section id="page">
+		<!-- 导航栏 开始-->
+		<div id="sidebar" class="sidebar">
+			<div class="sidebar-menu nav-collapse">
+				<ul>
+					<li class="has-sub"><a href="javascript:;" class=""><i
+							class="fa fa-shield fa-fw"></i> <span class="menu-text">安全控制</span><span
+							class="arrow"></span> </a>
+						<ul class="sub">
+							<li><a class="" href="#ipconfig"><span
+									class="sub-menu-text">IP访问限制</span></a></li>
+						</ul></li>
+					<li class="has-sub"><a href="javascript:;" class=""><i
+							class="fa fa-cogs fa-fw"></i> <span class="menu-text">通讯配置</span><span
+							class="arrow"></span> </a>
+						<ul class="sub">
+							<li><a class="" href="#bankconfig"><span
+									class="sub-menu-text">银行参数配置</span></a></li>
+						</ul></li>
+					<li class="has-sub"><a href="javascript:;" class=""> <i
+							class="fa fa-table fa-fw"></i> <span class="menu-text">平台监管</span>
+							<span class="arrow"></span>
+					</a>
+						<ul class="sub">
+							<li><a class="" href="#log"><span class="sub-menu-text">网银日志</span></a></li>
+							<li><a class="" href="#patchinfor"><span
+									class="sub-menu-text">已装补丁</span></a></li>
+							<li><a class="" href="#newpatch"><span
+									class="sub-menu-text">新装补丁</span></a></li>
+						</ul></li>
+					<li class="has-sub"><a href="javascript:;" class=""> <i
+							class="fa fa-table fa-fw"></i> <span class="menu-text">平台属性</span>
+							<span class="arrow"></span>
+					</a>
+						<ul class="sub">
+							<li><a class="" href="#interface"><span
+									class="sub-menu-text">接口详情</span></a></li>
+							<li><a class="" href="#version"><span
+									class="sub-menu-text">版本详情</span></a></li>
+						</ul></li>
+
+					<li class="has-sub"><a href="javascript:;" class=""> <i
+							class="fa fa-bar-chart-o fa-fw"></i> <span class="menu-text">支持&帮助
+						</span> <span class="arrow"></span>
+					</a>
+						<ul class="sub">
+							<li><a class="" href="#help"><span class="sub-menu-text">常见问题解答</span></a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 导航栏 结束-->
+		<div id="main-content"
+			style="position: absolute; height: 90%; overflow: auto">
+			<div class="container">
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header">
+									<div id="fh5co-header" role="banner">
+										<a href="#"
+											class="js-fh5co-nav-toggle fh5co-nav-toggle fh5co-nav-white"><i></i></a>
+										<div id="fh5co-logo" class="text-center">
+											<a href="welcome.html"><img src="img/33.png" alt="Image"
+												style="width: 100%; height: 100%;"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 页面主体开始 -->
+						<div class="separator"></div>
+						<div class="row">
+							<div class="col-md-12" id="ipconfig"></div>
+						</div>
+						<div class="separator"></div>
+						<div class="row">
+							<div class="col-md-12" id="bankconfig"></div>
+						</div>
+						<div class="separator"></div>
+						<div class="row">
+							<div class="col-md-12" id="log"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" id="patchinfor"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" id="newpatch"></div>
+						</div>
+						<div class="separator"></div>
+						<div class="row">
+							<div class="col-md-12" id="interface"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" id="version"></div>
+						</div>
+						<div class="separator"></div>
+						<div class="row">
+							<div class="col-md-12" id="help"></div>
+						</div>
+						<!-- 页面主体结束 -->
+						<div class="footer-tools">
+							<span class="go-top"> <i class="fa fa-chevron-up"></i> Top
+							</span>
+						</div>
+					</div>
+					<!-- /CONTENT-->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/PAGE -->
+	<!-- JAVASCRIPTS -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- JQUERY -->
+	<script src="js/jquery/jquery-2.0.3.min.js"></script>
+	<!-- JQUERY UI-->
+	<script
+		src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<!-- BOOTSTRAP -->
+	<script src="bootstrap-dist/js/bootstrap.min.js"></script>
+
+
+	<!-- DATE RANGE PICKER -->
+	<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
+
+	<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+	<!-- SLIMSCROLL -->
+	<script type="text/javascript"
+		src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+	<!-- SLIMSCROLL -->
+	<script type="text/javascript"
+		src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript"
+		src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+	<!-- BLOCK UI -->
+	<script type="text/javascript"
+		src="js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+	<!-- SPARKLINES -->
+	<script type="text/javascript"
+		src="js/sparklines/jquery.sparkline.min.js"></script>
+	<!-- EASY PIE CHART -->
+	<script src="js/jquery-easing/jquery.easing.min.js"></script>
+	<script type="text/javascript"
+		src="js/easypiechart/jquery.easypiechart.min.js"></script>
+	<!-- FLOT CHARTS -->
+	<script src="js/flot/jquery.flot.min.js"></script>
+	<script src="js/flot/jquery.flot.time.min.js"></script>
+	<script src="js/flot/jquery.flot.selection.min.js"></script>
+	<script src="js/flot/jquery.flot.resize.min.js"></script>
+	<script src="js/flot/jquery.flot.pie.min.js"></script>
+	<script src="js/flot/jquery.flot.stack.min.js"></script>
+	<script src="js/flot/jquery.flot.crosshair.min.js"></script>
+	<!-- TODO -->
+	<script type="text/javascript"
+		src="js/jquery-todo/js/paddystodolist.js"></script>
+	<!-- TIMEAGO -->
+	<script type="text/javascript" src="js/timeago/jquery.timeago.min.js"></script>
+	<!-- FULL CALENDAR -->
+	<script type="text/javascript"
+		src="js/fullcalendar/fullcalendar.min.js"></script>
+	<!-- COOKIE -->
+	<script type="text/javascript"
+		src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	<!-- GRITTER -->
+	<script type="text/javascript"
+		src="js/gritter/js/jquery.gritter.min.js"></script>
+	<!-- CUSTOM SCRIPT -->
+	<script src="js/script.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+
+			showTime();
+			loadPage();
+		});
+
+		function loadPage() {
+			$('#ipconfig').load('ipconfig.html');
+			$('#bankconfig').load('bankconfig.html');
+			//$('#log').load('log.html');
+			$('#patchinfor').load('patchinfor.html');
+			$('#newpatch').load('newpatch.html');
+			$('#interface').load('interface.html');
+			$('#version').load('version.html');
+			$('#help').load('help.html');
+		}
+
+		function showTime() {
+			var now = (new Date()).toLocaleString();
+			$('#time').text(now);
+			setInterval(function() {
+				now = (new Date()).toLocaleString();
+				$('#time').text(now);
+			}, 1000);
+		}
+	</script>
+	<!-- /JAVASCRIPTS -->
+</body>
+</html>
