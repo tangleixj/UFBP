@@ -127,7 +127,11 @@
 								</div>
 							</div>
 						</div>
-
+						<div class="separator"></div>
+						<div class="row">
+							<iframe src="ipconfig.html" id="ipconfig" class="col-md-12"
+								scrolling="no" onload="showChildPage(this)" frameborder="0"></iframe>
+						</div>
 						<!-- 页面主体开始 
 						<div class="separator"></div>
 						<div class="row">
@@ -184,7 +188,6 @@
 			App.init();//页面初始化
 			showTime();
 			//loadPage();
-
 			$.ajax({
 				url : 'version.html',
 				type : 'post',
@@ -197,7 +200,9 @@
 				}
 			});
 		});
-
+		function showChildPage(obj) {
+			obj.height = document.documentElement.clientHeight;
+		}
 		function loadPage() {
 			$('#ipconfig').load('ipconfig.html');
 			$('#bankconfig').load('bankconfig.html');

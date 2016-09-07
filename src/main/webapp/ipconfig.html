@@ -2,7 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>IP访问限制</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- STYLESHEETS -->
+<!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+<link rel="stylesheet" type="text/css" href="css/themes/default.css"
+	id="skin-switcher">
+<link rel="stylesheet" type="text/css" href="css/responsive.css">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="box border red ">
@@ -13,8 +24,6 @@
 			<div class="tools">
 				<a href="javascript:;" class="reload"> <i class="fa fa-plus"></i>
 				</a> <a href="javascript:;" class="reload"> <i class="fa fa-refresh"></i>
-				</a> <a href="javascript:;" class="collapse"> <i
-					class="fa fa-chevron-up"></i>
 				</a>
 			</div>
 		</div>
@@ -76,9 +85,33 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/script.js"></script>
-		<script>
-		</script>
 	</div>
+	<!-- JAVASCRIPTS -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- JQUERY -->
+	<script src="js/jquery/jquery-2.0.3.min.js"></script>
+	<!-- JQUERY UI-->
+	<script
+		src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<!-- BLOCK UI -->
+	<script type="text/javascript"
+		src="js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+	<!-- TABLE CLOTH -->
+	<script type="text/javascript"
+		src="js/tablecloth/js/jquery.tablecloth.js"></script>
+	<script type="text/javascript"
+		src="js/tablecloth/js/jquery.tablesorter.min.js"></script>
+	<!-- COOKIE -->
+	<script type="text/javascript"
+		src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	<!-- CUSTOM SCRIPT -->
+	<script src="js/script.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			App.setPage("simple_table"); //Set current page
+			App.init(); //Initialise plugins and elements
+		});
+	</script>
+	<!-- /JAVASCRIPTS -->
 </body>
 </html>
