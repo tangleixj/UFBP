@@ -21,6 +21,7 @@ import ufbp.exception.LoadConfigFileException;
 /**
  * 数据库连接池
  * 
+ * @see getConnection
  * @author 小磊子
  *
  */
@@ -34,10 +35,10 @@ public class DBConnectPool {
 	private static final String MAX_SIZE = "max_size";
 	private static final String INCREMENT_NUM = "increment_num";
 
-	private String driver;
-	private String url;
-	private String name;
-	private String passwd;
+	private String driver;// 驱动类名
+	private String url;// 地址信息
+	private String name;// 连接数据库用户名
+	private String passwd;// 连接数据库用户名密码
 	private int initSize = 20;// 初始连接数
 	private int maxSzie = 50;// 最大连接数
 	private int increNum = 10;// 增量
@@ -153,6 +154,12 @@ public class DBConnectPool {
 
 	}
 
+	/**
+	 * 获取连接
+	 * 
+	 * @return 连接
+	 * @throws SQLException
+	 */
 	public synchronized Connection getConnection() throws SQLException {
 		if (connList.size() > 0) {
 			final Connection conn = connList.remove(connList.size() - 1);
