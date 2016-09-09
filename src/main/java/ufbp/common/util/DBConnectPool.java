@@ -3,16 +3,15 @@ package ufbp.common.util;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
-import java.util.Set;
-import java.util.logging.Logger;
-
-import javax.sql.DataSource;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +24,7 @@ import ufbp.exception.LoadConfigFileException;
  * @author 小磊子
  *
  */
-public class DBConnectPool implements DataSource {
+public class DBConnectPool {
 	private static Log log = LogFactory.getLog(DBConnectPool.class);
 	private static final String DRIVER = "driver";
 	private static final String URL = "url";
@@ -35,11 +34,29 @@ public class DBConnectPool implements DataSource {
 	private static final String MAX_SIZE = "max_size";
 	private static final String INCREMENT_NUM = "increment_num";
 
+	private String driver;
+	private String url;
+	private String name;
+	private String passwd;
 	private int initSize = 20;// 初始连接数
 	private int maxSzie = 50;// 最大连接数
 	private int increNum = 10;// 增量
-
+	private int busyNum;// 正在使用链接数
+	private List<Connection> connList = new CopyOnWriteArrayList<Connection>();// 连接数据
 	private static DBConnectPool pool;
+
+	public static DBConnectPool getInstance() {
+		if (pool == null) {
+			synchronized (DBConnectPool.class) {
+				pool = new DBConnectPool();
+			}
+		}
+		return pool;
+	}
+
+	private DBConnectPool() {
+		initPool();
+	}
 
 	/**
 	 * 加载数据库连接池配置
@@ -68,24 +85,39 @@ public class DBConnectPool implements DataSource {
 		return prop;
 	}
 
+	private void createConnection(int num) {
+		try {
+			Class.forName(driver);
+			for (int i = 0; i < num; i++) {
+				Connection conn = DriverManager.getConnection(url, name, passwd);
+				connList.add(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			throw new LoadConfigFileException(LoadConfigFileException.ERROR_TYPE.DATA_ERROR, driver);
+		}
+	}
+
 	/**
 	 * 初始化连接池
 	 */
-	public void initPool() {
+	private void initPool() {
 		Properties prop = loadProp();
-		String driver = prop.getProperty(DRIVER);
+		driver = prop.getProperty(DRIVER);
 		if (driver == null) {
 			throw new LoadConfigFileException(LoadConfigFileException.ERROR_TYPE.MISS_ELEMENT, DRIVER);
 		}
-		String url = prop.getProperty(URL);
+		url = prop.getProperty(URL);
 		if (url == null) {
 			throw new LoadConfigFileException(LoadConfigFileException.ERROR_TYPE.MISS_ELEMENT, URL);
 		}
-		String name = prop.getProperty(NAME);
+		name = prop.getProperty(NAME);
 		if (name == null) {
 			throw new LoadConfigFileException(LoadConfigFileException.ERROR_TYPE.MISS_ELEMENT, NAME);
 		}
-		String passwd = prop.getProperty(PASSWD);
+		passwd = prop.getProperty(PASSWD);
 		if (passwd == null) {
 			throw new LoadConfigFileException(LoadConfigFileException.ERROR_TYPE.MISS_ELEMENT, PASSWD);
 		}
@@ -113,62 +145,52 @@ public class DBConnectPool implements DataSource {
 				throw new LoadConfigFileException(LoadConfigFileException.ERROR_TYPE.TYPE_MISMATCH, INCREMENT_NUM);
 			}
 		}
-	}
-
-	@Override
-	public PrintWriter getLogWriter() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setLogWriter(PrintWriter out) throws SQLException {
-		// TODO Auto-generated method stub
+		createConnection(initSize);
+		busyNum = 0;
+		if (log.isInfoEnabled()) {
+			log.info("创建数据库连接池完毕");
+		}
 
 	}
 
-	@Override
-	public void setLoginTimeout(int seconds) throws SQLException {
-		// TODO Auto-generated method stub
+	public synchronized Connection getConnection() throws SQLException {
+		if (connList.size() > 0) {
+			final Connection conn = connList.remove(connList.size() - 1);
+			busyNum++;
+			/**
+			 * 返回链接的代理。
+			 */
+			return (Connection) Proxy.newProxyInstance(DBConnectPool.class.getClassLoader(),
+					conn.getClass().getInterfaces(), new InvocationHandler() {
 
-	}
-
-	@Override
-	public int getLoginTimeout() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Connection getConnection() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Connection getConnection(String username, String password) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+						@Override
+						public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+							/**
+							 * 当链接关闭时，不释放连接，仅仅将连接重新放到connList中。
+							 */
+							if (method.getName().equals("close")) {
+								connList.add(conn);
+								busyNum--;
+								return null;
+							} else {
+								return method.invoke(conn, args);
+							}
+						}
+					});
+		} else if (busyNum + increNum <= maxSzie) {
+			createConnection(increNum);
+			return getConnection();
+		}
+		throw new SQLException("连接池已满");
 	}
 
 	public static void main(String[] args) {
+		DBConnectPool pool = DBConnectPool.getInstance();
+		try {
+			Connection conn = pool.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
