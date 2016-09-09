@@ -181,7 +181,10 @@ public class DBConnectPool {
 			createConnection(increNum);
 			return getConnection();
 		}
-		throw new SQLException("连接池已满");
+		if (log.isErrorEnabled()) {
+			log.error("数据库连接池已满,最大值[" + maxSzie + "],已使用[" + busyNum + "]");
+		}
+		return null;
 	}
 
 	public static void main(String[] args) {
