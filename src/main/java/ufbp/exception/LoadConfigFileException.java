@@ -10,7 +10,7 @@ public class LoadConfigFileException extends RuntimeException {
 	private static final long serialVersionUID = 72199283619005504L;
 
 	public static enum ERROR_TYPE {// 定义异常类别枚举集合
-		FILE_NOT_FOUND("文件找不到"), MISS_ELEMENT("缺少元素"), TYPE_MISMATCH("类型不匹配");
+		FILE_NOT_FOUND("文件找不到"), MISS_ELEMENT("缺少元素"), TYPE_MISMATCH("类型不匹配"), DATA_ERROR("数据异常");
 		private String value;
 
 		private ERROR_TYPE(String value) {
