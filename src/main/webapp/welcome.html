@@ -45,8 +45,8 @@
 						class="username" id="time"></span></a></li>
 				<li class="dropdown user" id="header-user"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <img alt=""
-						src="img/avatars/user.png" /> <span class="username">用户名</span> <i
-						class="fa fa-angle-down"></i>
+						src="img/avatars/user.png" /> <span class="username"
+						id="user_name"></span> <i class="fa fa-angle-down"></i>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="#"><i class="fa fa-cog"></i> 账户设置</a></li>
@@ -204,6 +204,7 @@
 	<script>
 		jQuery(document).ready(function() {
 			showTime();
+			getUser();
 			loadPage();
 		});
 
@@ -225,6 +226,18 @@
 				now = (new Date()).toLocaleString();
 				$('#time').text(now);
 			}, 1000);
+		}
+
+		function getUser() {
+			$.ajax({
+				type : 'POST',
+				url : 'getLoginName',
+				cache : false,
+				success : function(data) {
+					var name = data.name;
+					$('#user_name').html(name);
+				}
+			});
 		}
 	</script>
 	<!-- /JAVASCRIPTS -->
