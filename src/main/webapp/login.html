@@ -38,19 +38,24 @@
 						<div class="login-box-plain">
 							<h2 class="bigintro">用友网银平台</h2>
 							<div class="divide-40"></div>
-							<form role="form">
-								<div class="form-group">
-									<label for="exampleInputUsername">用户名</label> <i
+							<form role="form" action="login" method="post" id="login_form">
+								<div class="form-group" id="name-group">
+									<label for="name" class="control-label">用户名</label> <i
 										class="fa fa-user"></i> <input type="text"
-										class="form-control" id="exampleInputUsername">
+										class="form-control" id="name" name="name">
+								</div>
+								<div class="form-group" id="passwd-group">
+									<label for="passwd" class="control-label">密码</label> <i
+										class="fa fa-lock"></i> <input type="password"
+										class="form-control" id="passwd" name="passwd">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">密码</label> <i
-										class="fa fa-lock"></i> <input type="password"
-										class="form-control" id="exampleInputPassword1">
+									<div id="error-mess">
+										<br />
+									</div>
 								</div>
 								<div class="form-actions">
-									<button type="submit" class="btn btn-danger">登录</button>
+									<button type="submit" class="btn btn-danger" id="login-button">登录</button>
 								</div>
 							</form>
 							<!-- SOCIAL LOGIN -->
@@ -75,19 +80,19 @@
 							<div class="divide-40"></div>
 							<form role="form">
 								<div class="form-group">
-									<label for="exampleInputUsername">用户名</label> <i
+									<label for="new_name">用户名</label> <i
 										class="fa fa-user"></i> <input type="text"
-										class="form-control" id="exampleInputUsername">
+										class="form-control" id="new_name">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">密码</label> <i
+									<label for="new_passwd">密码</label> <i
 										class="fa fa-lock"></i> <input type="password"
-										class="form-control" id="exampleInputPassword1">
+										class="form-control" id="new_passwd">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword2">确认密码</label> <i
+									<label for="passwd_confirm">确认密码</label> <i
 										class="fa fa-check-square-o"></i> <input type="password"
-										class="form-control" id="exampleInputPassword2">
+										class="form-control" id="passwd_confirm">
 								</div>
 								<div class="form-actions">
 									<button type="submit" class="btn btn-success">注册</button>
@@ -115,19 +120,9 @@
 	<!-- JQUERY UI-->
 	<script
 		src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-
+	<script src="js/login.js"></script>
 	<!-- CUSTOM SCRIPT -->
 	<script src="js/script.js"></script>
-	<script>
-		jQuery(document).ready(function() {
-			App.init(); //Initialise plugins and elements
-		});
-
-		function swapScreen(id) {
-			jQuery('.visible').removeClass('visible animated fadeInUp');
-			jQuery('#' + id).addClass('visible animated fadeInUp');
-		}
-	</script>
 	<!-- /JAVASCRIPTS -->
 </body>
 </html>
