@@ -23,6 +23,9 @@ public class LoginAction extends ActionSupport {
 		if (service.checkNameExists(name)) {
 			errorMess = "true";
 		} else {
+			if (log.isDebugEnabled()) {
+				log.info("用户名[" + name + "]错误");
+			}
 			errorMess = "用户名不存在";
 		}
 		return SUCCESS;
@@ -33,6 +36,9 @@ public class LoginAction extends ActionSupport {
 		if (service.checkUserInfor(user)) {
 			errorMess = "true";
 		} else {
+			if (log.isDebugEnabled()) {
+				log.info("用户名[" + name + "]，密码[" + passwd + "]错误");
+			}
 			errorMess = "用户密码错误";
 		}
 		return SUCCESS;
@@ -42,6 +48,9 @@ public class LoginAction extends ActionSupport {
 		UserBean user = new UserBean(name, passwd);
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put(UserMangerService.USER, service.login(user));
+		if (log.isDebugEnabled()) {
+			log.debug("用户[" + name + "]登录成功");
+		}
 		return SUCCESS;
 	}
 
