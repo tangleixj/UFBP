@@ -4,4 +4,21 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	<!-- ajax -->
+	<package name="json-package" extends="json-default">
+		<action name="checkName" class="ufbp.action.LoginAction"
+			method="checkUserExists">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="checkPasswd" class="ufbp.action.LoginAction"
+			method="checkUserInfor">
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+	<!-- 用户管理 -->
+	<package name="user-manager" extends="struts-default">
+		<action name="login" class="ufbp.action.LoginAction" method="login">
+			<result name="success">/welcome.html</result>
+		</action>
+	</package>
 </struts>
