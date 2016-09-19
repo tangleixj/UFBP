@@ -6,12 +6,21 @@
 	<constant name="struts.i18n.encoding" value="utf-8"></constant>
 	<!-- ajax -->
 	<package name="json-package" extends="json-default">
+
+		<!-- 登录界面校验用户名 -->
 		<action name="checkName" class="ufbp.action.LoginAction"
 			method="checkUserExists">
 			<result name="success" type="json"></result>
 		</action>
+		<!-- 登录界面校验用户密码 -->
 		<action name="checkPasswd" class="ufbp.action.LoginAction"
 			method="checkUserInfor">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- 欢迎界面获取登录用户名 -->
+		<action name="getLoginName" class="ufbp.action.UserManagerAction"
+			method="getLoginName">
 			<result name="success" type="json"></result>
 		</action>
 	</package>
