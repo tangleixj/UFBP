@@ -49,9 +49,10 @@
 						id="user_name"></span> <i class="fa fa-angle-down"></i>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#"><i class="fa fa-cog"></i> 账户设置</a></li>
-						<li><a href="login.html"><i class="fa fa-power-off"></i>
-								注销</a></li>
+						<li><a href="#" id="userinfor"><i class="fa fa-cog"></i>
+								修改密码</a></li>
+						<li><a href="logout.action" id="logout"><i
+								class="fa fa-power-off"> </i> 注销</a></li>
 					</ul></li>
 			</ul>
 			<!-- 登录用户显示 -->
@@ -125,6 +126,39 @@
 								</div>
 							</div>
 						</div>
+						<div id="user_infor_div" class="col-md-5" style="display: none">
+							<div class="box border red modal-content">
+								<div class="box-title" id="mousemove">
+									<div class="tools">
+									</div>
+									<h4 class="modal-title">用户信息</h4>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label class="control-label">用户名</label> <input type="text"
+												class="form-control" id="name">
+										</div>
+										<div class="form-group">
+											<label class="control-label">密码</label> <input
+												type="password" class="form-control" id="passwd">
+										</div>
+										<div class="form-group">
+											<label class="control-label">确认密码</label> <input
+												type="password" class="form-control" id="confir_passwd">
+										</div>
+										<div id="error_mess">
+											<br />
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal" id="cancel_save">取消</button>
+									<button type="button" class="btn btn-danger" id="save_update">保存修改</button>
+								</div>
+							</div>
+						</div>
 						<div class="separator"></div>
 						<div class="row">
 							<div class="col-md-12" id="ipconfig"></div>
@@ -183,9 +217,6 @@
 	<script src="bootstrap-dist/js/bootstrap.min.js"></script>
 	<!-- TYPEHEAD -->
 	<script type="text/javascript" src="js/typeahead/typeahead.min.js"></script>
-	<!-- TABLE CLOTH -->
-	<script type="text/javascript"
-		src="js/tablecloth/js/jquery.tablecloth.js"></script>
 	<script type="text/javascript"
 		src="js/tablecloth/js/jquery.tablesorter.min.js"></script>
 	<!-- AUTOSIZE -->
@@ -200,46 +231,8 @@
 	<!-- COOKIE -->
 	<script type="text/javascript"
 		src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
-	<script src="js/script.js"></script>
-	<script>
-		jQuery(document).ready(function() {
-			showTime();
-			getUser();
-			loadPage();
-		});
-
-		function loadPage() {
-			$('#ipconfig').load('ipconfig.html');
-			$('#bankconfig').load('bankconfig.html');
-			//$('#log').load('log.html');
-			$('#patchinfor').load('patchinfor.html');
-			//$('#newpatch').load('newpatch.html');
-			$('#interface').load('interface.html');
-			$('#version').load('version.html');
-			$('#help').load('help.html');
-		}
-
-		function showTime() {
-			var now = (new Date()).toLocaleString();
-			$('#time').text(now);
-			setInterval(function() {
-				now = (new Date()).toLocaleString();
-				$('#time').text(now);
-			}, 1000);
-		}
-
-		function getUser() {
-			$.ajax({
-				type : 'POST',
-				url : 'getLoginName',
-				cache : false,
-				success : function(data) {
-					var name = data.name;
-					$('#user_name').html(name);
-				}
-			});
-		}
-	</script>
+	<script type="text/javascript" src="js/user_form_view.js"></script>
+	<script type="text/javascript" src="js/welcome.js"></script>
 	<!-- /JAVASCRIPTS -->
 </body>
 </html>
