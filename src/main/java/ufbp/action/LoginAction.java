@@ -23,10 +23,10 @@ public class LoginAction extends ActionSupport {
 		if (service.checkNameExists(name)) {
 			errorMess = "true";
 		} else {
+			errorMess = "ç”¨æˆ·å[" + name + "]ä¸å­˜åœ¨";
 			if (log.isDebugEnabled()) {
-				log.info("ÓÃ»§Ãû[" + name + "]´íÎó");
+				log.info(errorMess);
 			}
-			errorMess = "ÓÃ»§Ãû²»´æÔÚ";
 		}
 		return SUCCESS;
 	}
@@ -36,10 +36,11 @@ public class LoginAction extends ActionSupport {
 		if (service.checkUserInfor(user)) {
 			errorMess = "true";
 		} else {
+			errorMess = "å¯†ç é”™è¯¯";
 			if (log.isDebugEnabled()) {
-				log.info("ÓÃ»§Ãû[" + name + "]£¬ÃÜÂë[" + passwd + "]´íÎó");
+				log.info("å¯†ç é”™è¯¯");
 			}
-			errorMess = "ÓÃ»§ÃÜÂë´íÎó";
+
 		}
 		return SUCCESS;
 	}
@@ -49,7 +50,7 @@ public class LoginAction extends ActionSupport {
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put(UserMangerService.USER, service.login(user));
 		if (log.isDebugEnabled()) {
-			log.debug("ÓÃ»§[" + name + "]µÇÂ¼³É¹¦");
+			log.debug("ç”¨æˆ·[" + name + "]ç™»å½•æˆåŠŸ");
 		}
 		return SUCCESS;
 	}
