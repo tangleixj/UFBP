@@ -18,16 +18,34 @@
 			<result name="success" type="json"></result>
 		</action>
 
-		<!-- 欢迎界面获取登录用户名 -->
-		<action name="getLoginName" class="ufbp.action.UserManagerAction"
-			method="getLoginName">
+		<!-- 欢迎界面获取登录用户信息 -->
+		<action name="getUserInfor" class="ufbp.action.UserManagerAction"
+			method="getUserInfor">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- 用户信息面板校验用户名 -->
+		<action name="checkNameUsed" class="ufbp.action.UserManagerAction"
+			method="checkNameUsed">
+			<result name="success" type="json"></result>
+		</action>
+		<!-- 用户信息面板保存用户修改信息 -->
+		<action name="updateUserInfor" class="ufbp.action.UserManagerAction"
+			method="updateUserInfor">
 			<result name="success" type="json"></result>
 		</action>
 	</package>
 	<!-- 用户管理 -->
 	<package name="user-manager" extends="struts-default">
+		<!-- 登录 -->
 		<action name="login" class="ufbp.action.LoginAction" method="login">
-			<result name="success">/welcome.html</result>
+			<result name="success" type="redirect">/welcome.html</result>
+		</action>
+
+		<!-- 注销 -->
+		<action name="logout" class="ufbp.action.UserManagerAction"
+			method="logout">
+			<result name="success" type="redirect">/login.html</result>
 		</action>
 	</package>
 </struts>
