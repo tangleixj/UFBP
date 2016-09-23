@@ -20,29 +20,73 @@ import ufbp.service.UserMangerService;
 public class UserManagerAction extends ActionSupport {
 	private static final long serialVersionUID = -1285376018357891565L;
 	private Log log = LogFactory.getLog(UserManagerAction.class);
+	private UserMangerService service = new UserMangerService();
 	private String name;
 	private String passwd;
+	private String errorMess;
 
 	/**
-	 * 获取登录用户名
-	 * 
+	 * 注销
 	 */
-	public String getLoginName() {
-		ActionContext act = ActionContext.getContext();
-		Map<String, Object> session = act.getSession();
-		UserBean user = session.get(UserMangerService.USER) == null ? null
-				: (UserBean) session.get(UserMangerService.USER);
-		if (user != null) {
-			name = user.getName();
-			if (log.isDebugEnabled()) {
-				log.debug("当前登录用户[" + name + "]");
+	public String logout() {
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		session.remove(UserMangerService.USER);
+		if (log.isDebugEnabled()) {
+			log.debug("注销成功");
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 获取用户信息
+	 */
+	public String getUserInfor() {
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		UserBean user = (UserBean) session.get(UserMangerService.USER);
+		name = user.getName();
+		passwd = user.getPasswd();
+		return SUCCESS;
+	}
+
+	/**
+	 * 校验用户名是否可用
+	 */
+	public String checkNameUsed() {
+		if (service.checkNameExists(name)) {
+			if (log.isInfoEnabled()) {
+				log.info("用户名[" + name + "]已使用");
 			}
-			return SUCCESS;
+			errorMess = "用户名[" + name + "]已使用";
+		} else {
+			errorMess = "true";
 		}
-		if (log.isErrorEnabled()) {
-			log.error("当前未登录");
+		return SUCCESS;
+	}
+
+	/**
+	 * 更新用户信息
+	 */
+	public String updateUserInfor() {
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		UserBean user = (UserBean) session.get(UserMangerService.USER);
+		/**
+		 * 前端会对用户信息的修改情况做比对，如果有修改，则发送修改的字段，未修改的字段不发送。 所以后端中字段为空的表示未作修改。
+		 * 如果所有信息都没有修改，前端不会发送请求。后端也无须考虑都为空的情况
+		 */
+		if (name != null && !"".equals(name)) {
+			service.changeUserName(user, name);
+			user.setName(name);
 		}
-		return ERROR;
+		if (passwd != null && !"".equals(passwd)) {
+			service.changeUserPasswd(user, passwd);
+			user.setPasswd(passwd);
+		}
+		name = user.getName();
+		passwd = user.getPasswd();
+		if (log.isDebugEnabled()) {
+			log.debug("更新用户信息完毕");
+		}
+		return SUCCESS;
 	}
 
 	public String getName() {
@@ -59,6 +103,14 @@ public class UserManagerAction extends ActionSupport {
 
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
+	}
+
+	public String getErrorMess() {
+		return errorMess;
+	}
+
+	public void setErrorMess(String errorMess) {
+		this.errorMess = errorMess;
 	}
 
 }
