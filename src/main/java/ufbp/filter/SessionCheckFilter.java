@@ -46,8 +46,7 @@ public class SessionCheckFilter extends HttpServlet implements Filter {
 		 * 对访问的地址进行过滤，如果地址不是登录界面则需要对session进行校验
 		 */
 		if ((url.startsWith("/") && url.endsWith("html") && !url.startsWith("/login"))) {
-			UserBean user = session.get(UserMangerService.USER) == null ? null
-					: (UserBean) session.get(UserMangerService.USER);
+			UserBean user = (UserBean) session.get(UserMangerService.USER);
 			if (user != null) {
 				filterChain.doFilter(req, res);
 			} else {
